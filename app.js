@@ -1,10 +1,10 @@
 const products = [
-  {id:'court-jersey',name:'PR7 Court Jersey',category:'Clubwear',price:899,was:1199,tag:'CLUB FAVOURITE',color:'Electric green / Black',image:'assets/activewear-flatlay.jpg',imageAlt:'PR7 inspired activewear collection flat lay'},
+  {id:'court-jersey',name:'PR7 Court Jersey',category:'Clubwear',price:899,was:1199,tag:'CLUB FAVOURITE',color:'Electric green / Black',image:'assets/community-reference.jpg',imageAlt:'Streetwear club lookbook group styling reference'},
   {id:'training-tee',name:'Everyday Training Tee',category:'Training',price:649,was:799,tag:'NEW DROP',color:'Shadow / Graphite',image:'assets/training-editorial.webp',imageAlt:'Athlete wearing a performance training outfit'},
-  {id:'club-track',name:'Apex Tech Track Jacket',category:'Streetwear',price:1499,was:1899,tag:'LIMITED RUN',color:'Club green',image:'assets/green-streetwear.webp',imageAlt:'Green sportswear inspired streetwear look'},
+  {id:'club-track',name:'Apex Tech Track Jacket',category:'Streetwear',price:1499,was:1899,tag:'LIMITED RUN',color:'Club green',image:'assets/streetwear-reference.jpg',imageAlt:'Modern black streetwear layered outfit'},
   {id:'pace-short',name:'Pace Training Shorts',category:'Training',price:749,was:949,tag:'MOVE FREELY',color:'Black / Volt',image:'assets/athlete-editorial.jpg',imageAlt:'Athlete in a dark activewear look'},
-  {id:'club-crew',name:'PR7 Club Crew Tee',category:'Clubwear',price:599,was:749,tag:'EVERYDAY KIT',color:'Carbon black',image:'assets/activewear-flatlay.jpg',imageAlt:'Folded activewear essentials'},
-  {id:'street-jersey',name:'Street League Jersey',category:'Streetwear',price:999,was:1299,tag:'FRESH PICK',color:'Forest / Chalk',image:'assets/green-streetwear.webp',imageAlt:'Street style sportswear in deep green'},
+  {id:'club-crew',name:'PR7 Club Crew Tee',category:'Clubwear',price:599,was:749,tag:'EVERYDAY KIT',color:'Carbon black',image:'assets/training-flatlay-reference.jpg',imageAlt:'Training shoes and workout accessories flat lay'},
+  {id:'street-jersey',name:'Street League Jersey',category:'Streetwear',price:999,was:1299,tag:'FRESH PICK',color:'Forest / Chalk',image:'assets/community-reference.jpg',imageAlt:'Streetwear community lookbook styling'},
   {id:'rep-tee',name:'Rep Mode Performance Tee',category:'Training',price:699,was:899,tag:'TRAINING GEAR',color:'Black / Ash',image:'assets/training-editorial.webp',imageAlt:'Performance tee in a workout setting'},
   {id:'club-cap',name:'PR7 Sideline Cap',category:'Clubwear',price:499,was:649,tag:'CLUB ESSENTIAL',color:'Jet black',image:'assets/athlete-editorial.jpg',imageAlt:'Athletic outfit detail'}
 ];
@@ -35,7 +35,7 @@ $('.newsletter-form').addEventListener('submit',e=>{e.preventDefault();const fie
 updateCounters();renderProducts();
 
 // Local editorial poster interactions.
-const featureShots=['assets/pr7-editorial-spotlight.png','assets/training-editorial.webp','assets/activewear-flatlay.jpg'];
+const featureShots=['assets/pr7-editorial-spotlight.webp','assets/streetwear-reference.jpg','assets/community-reference.jpg'];
 function setFeatureShot(index){state.featureShot=(index+featureShots.length)%featureShots.length;const img=$('.stage-image');img.classList.add('is-changing');setTimeout(()=>{img.src=featureShots[state.featureShot];img.onload=()=>img.classList.remove('is-changing');},160);$$('.thumb').forEach((b,i)=>b.classList.toggle('active',i===state.featureShot));}
 $$('.thumb').forEach(b=>b.addEventListener('click',()=>setFeatureShot(Number(b.dataset.shot))));
 $('.thumb-up').addEventListener('click',()=>setFeatureShot(state.featureShot-1));$('.thumb-down').addEventListener('click',()=>setFeatureShot(state.featureShot+1));
@@ -44,3 +44,11 @@ $$('.swatch').forEach(b=>b.addEventListener('click',()=>{state.featureColor=b.da
 $('.feature-add').addEventListener('click',()=>{state.bag['club-track']=(state.bag['club-track']||0)+1;persist();toast(`APEX TECH JACKET · SIZE ${state.featureSize} ADDED`)});
 $('.stage-bag').addEventListener('click',openCart);$('.stage-search').addEventListener('click',()=>{$('.search-toggle').click();$('#search-input').focus()});
 const intro=document.querySelector('#site-loader');if(intro){intro.hidden=false;document.body.classList.add('intro-active');let ended=false;const finish=()=>{if(ended)return;ended=true;intro.classList.add('loader-exit');document.body.classList.remove('intro-active');setTimeout(()=>intro.remove(),720)};const timer=setTimeout(finish,1700);window.addEventListener('load',()=>setTimeout(()=>{clearTimeout(timer);finish()},850),{once:true});}
+
+// Soft reveal-on-scroll; content stays visible when reduced motion is requested or observers are unavailable.
+if('IntersectionObserver' in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ const revealTargets=$$('.collection-card,.product-card,.manifesto-img,.manifesto-copy,.community-tile,.newsletter');
+ revealTargets.forEach((el,i)=>{el.classList.add('reveal-on-scroll');el.style.setProperty('--reveal-delay',`${(i%4)*65}ms`)});
+ const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-revealed');revealObserver.unobserve(entry.target)}}),{threshold:.12,rootMargin:'0px 0px -36px 0px'});
+ revealTargets.forEach(el=>revealObserver.observe(el));
+}

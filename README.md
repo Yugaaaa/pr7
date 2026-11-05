@@ -1,23 +1,19 @@
 # PR7 Sports Club storefront
 
-A responsive, static storefront prototype rebranded for PR7 Sports Club. The visual direction uses a charcoal base, sharp lime accents, athletic editorial imagery, and an oversized condensed display face.
+Responsive, static storefront concept for PR7 Sports Club. The visual system pairs charcoal surfaces, a sharp lime accent, bundled condensed display typography, web-sourced streetwear/editorial references, and a locally generated campaign image.
 
 ## Run locally
 
-Open `index.html` directly in a modern browser, or serve this folder with any static file server. There is no build step and no package installation required.
+Open `index.html` in a modern browser, or serve this folder with any static file server. There is no build step, external font service, app API, payment integration, or backend.
 
-## Included interactions
+## Included UI
 
-- Category filters, price sorting, and local product search
-- Saved products and a shopping bag persisted in browser `localStorage`
-- Responsive mobile navigation and bag drawer
-- Newsletter form feedback kept entirely in the browser
+The storefront includes product search, category filters, sorting, saved items, a local demo bag, mobile navigation, an animated branded loader, an editorial glassmorphism spotlight with working image/size/color controls, and reduced-motion-aware scroll reveals. Newsletter and checkout interactions are demonstration-only and do not transmit data.
 
-This is frontend-only sample storefront code. Product names, pricing, imagery, brand details, and the 2024 brand-establishment date are demo content and should be replaced with approved PR7 materials. The bag is not connected to checkout, inventory, payment, email collection, or any server. The page makes no app API calls and is not deployed or hosted by Manus.
+## Project files
 
-## Files
+`index.html` contains the page and controls. `styles.css` contains responsive layout, visual tokens, typography, glass surfaces, and motion. `app.js` handles browser-local interactions. `assets/` contains bundled images and fonts so the site does not depend on external asset requests.
 
-- `index.html` — page structure and accessible controls
-- `styles.css` — responsive styling and design tokens
-- `app.js` — local-only UI behavior and sample product catalog
-- `assets/` — locally stored editorial imagery
+## Demo content and image notes
+
+Product names, prices, discounts, product imagery, and brand-history details are sample content. The local streetwear and community imagery was sourced from search results associated with Multiversity Store, while the training flat-lay reference was associated with iStock. The references provide visual context and are not verified PR7 merchandise. Confirm permission and licensing for commercial use before publishing; replace reference images with approved PR7 photography where required.
