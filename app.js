@@ -34,7 +34,7 @@ $('.menu-toggle').addEventListener('click',()=>{const nav=$('.main-nav'),open=na
 $('.newsletter-form').addEventListener('submit',e=>{e.preventDefault();const field=$('#email-input'),feedback=$('.form-feedback');if(!field.validity.valid){feedback.textContent='ADD A VALID EMAIL ADDRESS TO JOIN.';return}feedback.textContent='YOU’RE ON THE LIST — WELCOME TO PR7.';field.value='';toast('YOU’RE ON THE LIST');});
 updateCounters();renderProducts();
 
-// Editorial poster controls: carousel, size/color selection, search shortcut and bag action.
+// Local editorial poster interactions.
 const featureShots=['assets/pr7-editorial-spotlight.png','assets/training-editorial.webp','assets/activewear-flatlay.jpg'];
 function setFeatureShot(index){state.featureShot=(index+featureShots.length)%featureShots.length;const img=$('.stage-image');img.classList.add('is-changing');setTimeout(()=>{img.src=featureShots[state.featureShot];img.onload=()=>img.classList.remove('is-changing');},160);$$('.thumb').forEach((b,i)=>b.classList.toggle('active',i===state.featureShot));}
 $$('.thumb').forEach(b=>b.addEventListener('click',()=>setFeatureShot(Number(b.dataset.shot))));
@@ -42,9 +42,5 @@ $('.thumb-up').addEventListener('click',()=>setFeatureShot(state.featureShot-1))
 $$('.size-choice').forEach(b=>b.addEventListener('click',()=>{state.featureSize=b.dataset.size;$$('.size-choice').forEach(x=>x.classList.toggle('active',x===b));toast(`SIZE ${state.featureSize} SELECTED`)}));
 $$('.swatch').forEach(b=>b.addEventListener('click',()=>{state.featureColor=b.dataset.color;$$('.swatch').forEach(x=>x.classList.toggle('selected',x===b));$('.selected-color-label').textContent=state.featureColor;toast(`${state.featureColor} SELECTED`)}));
 $('.feature-add').addEventListener('click',()=>{state.bag['club-track']=(state.bag['club-track']||0)+1;persist();toast(`APEX TECH JACKET · SIZE ${state.featureSize} ADDED`)});
-$('.stage-bag').addEventListener('click',openCart);
-$('.stage-search').addEventListener('click',()=>{$('.search-toggle').click();$('#search-input').focus()});
-
-// Short branded opening sequence. The page remains usable if scripts are disabled.
-const intro=document.querySelector('#site-loader');
-if(intro){intro.hidden=false;document.body.classList.add('intro-active');let introDone=false;const finishIntro=()=>{if(introDone)return;introDone=true;intro.classList.add('loader-exit');document.body.classList.remove('intro-active');setTimeout(()=>intro.remove(),720)};const introTimer=setTimeout(finishIntro,1700);window.addEventListener('load',()=>setTimeout(()=>{clearTimeout(introTimer);finishIntro()},850),{once:true});}
+$('.stage-bag').addEventListener('click',openCart);$('.stage-search').addEventListener('click',()=>{$('.search-toggle').click();$('#search-input').focus()});
+const intro=document.querySelector('#site-loader');if(intro){intro.hidden=false;document.body.classList.add('intro-active');let ended=false;const finish=()=>{if(ended)return;ended=true;intro.classList.add('loader-exit');document.body.classList.remove('intro-active');setTimeout(()=>intro.remove(),720)};const timer=setTimeout(finish,1700);window.addEventListener('load',()=>setTimeout(()=>{clearTimeout(timer);finish()},850),{once:true});}
